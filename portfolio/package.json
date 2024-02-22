@@ -18,11 +18,13 @@
     "swr": "^2.2.5"
   },
   "devDependencies": {
+    "@types/eslint": "^8.56.2",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
+    "eslint-config-react-app": "^7.0.1",
     "typescript": "^5"
   },
   "packageManager": "yarn@3.7.0"

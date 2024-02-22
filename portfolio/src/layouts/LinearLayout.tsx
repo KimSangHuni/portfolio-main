@@ -18,5 +18,7 @@ export default function LinearLayout({ children }:ChildNode) {
 }
 
 const styles = css`
-    backgroun: black;
+    position: relative;
+    width: 1200px;
+    background: black;
 `
