@@ -1,9 +1,12 @@
 import RecoilRootWrapper from "@/components/RecoilRootWrapper";
+import { getMediaQueryStyle } from "@/styles/media/mediaQuery";
 import { ChildNode } from "@/types/global";
 import { css } from '@emotion/react';
 import Head from "next/head";
 
-export default function LinearLayout({ children }:ChildNode) {
+import { BreakPoints } from "@/styles/media/palette";
+
+export default function LinearLayout({ children }: ChildNode) {
     return (
         <RecoilRootWrapper>
             <Head>
@@ -12,13 +15,40 @@ export default function LinearLayout({ children }:ChildNode) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main css={styles}>{children}</main>
+            <main css={styles}>
+                <div>{children}</div>
+                <p>test</p>
+            </main>
         </RecoilRootWrapper>
     );
 }
 
 const styles = css`
     position: relative;
-    width: 1200px;
-    background: black;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    transition: 0.2s;
+    
+    ${getMediaQueryStyle("sm", css`
+        width: ${BreakPoints.sm}px;
+    `)}
+    
+    ${getMediaQueryStyle("md", css`
+        width: ${BreakPoints.md}px;
+    `)}
+    
+    ${getMediaQueryStyle("lg", css`
+        width: ${BreakPoints.lg}px;
+        flex-direction: row;
+    `)}
+    
+    ${getMediaQueryStyle("xl", css`
+        width: ${BreakPoints.xl}px;
+    `)}
 `
