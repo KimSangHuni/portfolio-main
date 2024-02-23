@@ -1,3 +1,5 @@
+import { colorTable } from "./color";
+
 type FontProps = {
     size: number;
     weight: number;
@@ -14,21 +16,21 @@ export const font:Font = {
     sm: {
         size: 14,
         weight: 300,
-        color: ""
+        color: colorTable[400]
     },
     md: {
         size: 16,
         weight: 400,
-        color: ""
+        color: colorTable[500]
     },
     lg: {
-        size: 18,
+        size: 20,
         weight: 600,
-        color: ""
+        color: colorTable[700]
     },
     xl: {
-        size: 20,
+        size: 24,
         weight: 800,
-        color: ""
+        color: colorTable[900]
     }
 }
