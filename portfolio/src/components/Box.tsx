@@ -3,7 +3,7 @@ import { SerializedStyles, css } from "@emotion/react"
 import Image from "next/image"
 
 interface ProfileProps extends ChildNode {
-    style: Partial<SerializedStyles>;
+    style?: SerializedStyles;
 }
 
 export default function Box({ children, style }: ProfileProps) {

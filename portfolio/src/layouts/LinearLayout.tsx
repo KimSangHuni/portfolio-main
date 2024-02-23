@@ -5,6 +5,8 @@ import { css } from '@emotion/react';
 import Head from "next/head";
 
 import { BreakPoints } from "@/styles/media/palette";
+import Header from "@/components/Header";
+import Profile from "@/components/Profile";
 
 export default function LinearLayout({ children }: ChildNode) {
     return (
@@ -16,8 +18,10 @@ export default function LinearLayout({ children }: ChildNode) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main css={styles}>
-                <div>{children}</div>
-                <p>test</p>
+                <Header>
+                    <Profile size={120}/>
+                </Header>
+                {children}
             </main>
         </RecoilRootWrapper>
     );
@@ -25,16 +29,15 @@ export default function LinearLayout({ children }: ChildNode) {
 
 const styles = css`
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
     width: 100%;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin: 0 auto;
-    background: rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     transition: 0.2s;
-    
+
     ${getMediaQueryStyle("sm", css`
         width: ${BreakPoints.sm}px;
     `)}

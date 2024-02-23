@@ -5,13 +5,14 @@ import { BreakPoints } from "@/styles/media/palette"
 
 export default function Header({ children }: ChildNode) {
     return (
-        <header css={styles}>{children}</header>
+        <header css={styles}>
+            {children}
+        </header>
     )
 }
 
 const styles = css`
     width: 100%;
-    height: 320px;
     padding: 1rem;
     
     ${getMediaQueryStyle("sm", css`
@@ -23,7 +24,7 @@ const styles = css`
     `)}
     
     ${getMediaQueryStyle("lg", css`
-        width: 430px;
+        width: 530px;
         height: 100vh;
     `)}
 `
