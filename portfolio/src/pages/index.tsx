@@ -25,7 +25,7 @@ export default function Home() {
       </InnerWrapper>
       <InnerWrapper>
         <Box>
-          <Typography size="lg">career</Typography>
+          <Typography size="lg">Career</Typography>
         </Box>
         <Box>
           

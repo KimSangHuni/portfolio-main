@@ -3,12 +3,13 @@ import Image from "next/image"
 import Box from "./Box"
 import Typography from "./typography/Typography";
 
-
 interface ProfileProps {
     size?: number;
 }
 
-export default function Profile({ size=240 }: ProfileProps) {
+export default function Profile(props:any) {
+    console.log(props)
+    const size = 120;
     return (
         <Box style={styles}>
             <div css={css`
@@ -28,6 +29,13 @@ export default function Profile({ size=240 }: ProfileProps) {
             </div>
         </Box>
     )
+}
+
+export async function getStaticProps() {
+    const response = await fetch("http://localhost:3000/api/users");
+    const json = response.json();
+
+    return { props: { data: json }};
 }
 
 const styles = css`
