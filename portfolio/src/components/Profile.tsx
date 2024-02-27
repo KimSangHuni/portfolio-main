@@ -3,24 +3,27 @@ import Image from "next/image"
 import Box from "./Box"
 import Typography from "./typography/Typography";
 import useSWR from "swr";
+import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
+import { ResponseType } from "@/types/global";
 
 interface ProfileProps {
     size?: number;
 }
 
-async function testFetch() {
-    const response = await fetch("http://192.168.1.7:3000/api/users");
-    const json = response.json();
-    return {  ...json };
+async function testFetch(): Promise<ResponseType<QueryDatabaseResponse>> {
+    const response = await fetch("http://localhost:3000/api/users");
+    return response.json();
+    
 }
 
 export default function Profile({ size }: ProfileProps) {
-    const { data, error } = useSWR("profileFetch", testFetch);
+    const { data, error } = useSWR<ResponseType<QueryDatabaseResponse>>("profileFetch", testFetch);
     
     if (error) return <div>Failed to load</div>
     if (!data) return <div>Loading...</div>
 
-    console.log(data);
+    const result = data.response.results[0]?.properties;
+
     return (
         <Box style={styles}>
             <div css={css`
@@ -30,13 +33,13 @@ export default function Profile({ size }: ProfileProps) {
                 margin-bottom: 4px;
                 overflow: hidden;
             `}>
-                <Image src={`https://source.unsplash.com/random/${size}×${size}`} width={size} height={size} alt={""} />
+                <Image src={result?.profile_image?.rich_text[0]?.plain_text} width={size} height={size} alt={"profile"} />
             </div>
-            <Typography size="lg">{data?.response?.object}</Typography>
+            <Typography size="lg">{result.name.rich_text[0].plain_text}</Typography>
             <div css={textStyle}>
-                <Typography size="md">Front-end Developer</Typography>
-                <Typography size="md">+82 010-5736-6491</Typography>
-                <Typography size="md">https://github.com/KimSangHuni</Typography>
+                <Typography size="md">{result?.name?.rich_text[0]?.plain_text}</Typography>
+                <Typography size="md">{result?.phone_number?.rich_text[0]?.plain_text}</Typography>
+                <Typography size="md">{result?.git?.rich_text[0]?.plain_text}</Typography>
             </div>
         </Box>
     )
