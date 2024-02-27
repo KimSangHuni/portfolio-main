@@ -2,14 +2,25 @@ import { css } from "@emotion/react"
 import Image from "next/image"
 import Box from "./Box"
 import Typography from "./typography/Typography";
+import useSWR from "swr";
 
 interface ProfileProps {
     size?: number;
 }
 
-export default function Profile(props:any) {
-    console.log(props)
-    const size = 120;
+async function testFetch() {
+    const response = await fetch("http://192.168.1.7:3000/api/users");
+    const json = response.json();
+    return {  ...json };
+}
+
+export default function Profile({ size }: ProfileProps) {
+    const { data, error } = useSWR("profileFetch", testFetch);
+    
+    if (error) return <div>Failed to load</div>
+    if (!data) return <div>Loading...</div>
+
+    console.log(data);
     return (
         <Box style={styles}>
             <div css={css`
@@ -21,7 +32,7 @@ export default function Profile(props:any) {
             `}>
                 <Image src={`https://source.unsplash.com/random/${size}×${size}`} width={size} height={size} alt={""} />
             </div>
-            <Typography size="lg">김상훈</Typography>
+            <Typography size="lg">{data?.response?.object}</Typography>
             <div css={textStyle}>
                 <Typography size="md">Front-end Developer</Typography>
                 <Typography size="md">+82 010-5736-6491</Typography>
@@ -31,12 +42,7 @@ export default function Profile(props:any) {
     )
 }
 
-export async function getStaticProps() {
-    const response = await fetch("http://localhost:3000/api/users");
-    const json = response.json();
 
-    return { props: { data: json }};
-}
 
 const styles = css`
     position: relative;
