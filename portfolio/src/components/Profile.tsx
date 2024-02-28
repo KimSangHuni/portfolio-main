@@ -5,24 +5,15 @@ import Typography from "./typography/Typography";
 import useSWR from "swr";
 import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
 import { ResponseType } from "@/types/global";
+import TMP_IMAGE from "@/assets/TMP_IMAGE.png";
 
-interface ProfileProps {
-    size?: number;
+type ProfileProps = {
+    data?: ResponseType<QueryDatabaseResponse>
 }
 
-async function testFetch(): Promise<ResponseType<QueryDatabaseResponse>> {
-    const response = await fetch("http://localhost:3000/api/users");
-    return response.json();
-    
-}
-
-export default function Profile({ size }: ProfileProps) {
-    const { data, error } = useSWR<ResponseType<QueryDatabaseResponse>>("profileFetch", testFetch);
-    
-    if (error) return <div>Failed to load</div>
-    if (!data) return <div>Loading...</div>
-
-    const result = data.response.results[0]?.properties;
+export default function Profile({ data }: ProfileProps) {
+    const size = 120;
+    const result = data?.response?.results[0]?.properties;
 
     return (
         <Box style={styles}>
@@ -33,13 +24,13 @@ export default function Profile({ size }: ProfileProps) {
                 margin-bottom: 4px;
                 overflow: hidden;
             `}>
-                <Image src={result?.profile_image?.rich_text[0]?.plain_text} width={size} height={size} alt={"profile"} />
+                <Image src={result.profile_image.rich_text[0]?.plain_text ?? TMP_IMAGE} width={size} height={size} alt={"profile"} />
             </div>
-            <Typography size="lg">{result.name.rich_text[0].plain_text}</Typography>
+            <Typography size="lg">{result.name.rich_text[0]?.plain_text}</Typography>
             <div css={textStyle}>
-                <Typography size="md">{result?.name?.rich_text[0]?.plain_text}</Typography>
-                <Typography size="md">{result?.phone_number?.rich_text[0]?.plain_text}</Typography>
-                <Typography size="md">{result?.git?.rich_text[0]?.plain_text}</Typography>
+                <Typography size="md">{result.job.rich_text[0]?.plain_text}</Typography>
+                <Typography size="md">{result.phone_number.rich_text[0]?.plain_text}</Typography>
+                <Typography size="md">{result.git.rich_text[0]?.plain_text}</Typography>
             </div>
         </Box>
     )

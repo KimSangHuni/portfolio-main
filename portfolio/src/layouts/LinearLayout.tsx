@@ -6,7 +6,6 @@ import Head from "next/head";
 
 import { BreakPoints } from "@/styles/media/palette";
 import Header from "@/components/Header";
-import Profile from "@/components/Profile";
 
 export default function LinearLayout({ children }: ChildNode) {
     return (
@@ -18,9 +17,7 @@ export default function LinearLayout({ children }: ChildNode) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main css={styles}>
-                <Header>
-                    <Profile size={120}/>
-                </Header>
+                <Header />
                 {children}
             </main>
         </RecoilRootWrapper>

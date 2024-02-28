@@ -1,14 +1,25 @@
 import { getMediaQueryStyle } from "@/styles/media/mediaQuery"
-import { ChildNode } from "@/types/global"
 import { css } from "@emotion/react"
 import { BreakPoints } from "@/styles/media/palette"
+import Profile from "./Profile"
+import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
+import { ResponseType } from "@/types/global";
+import { useDataWithLoading } from "@/hooks/useDataWithLoading";
 
-export default function Header({ children }: ChildNode) {
-    return (
-        <header css={styles}>
-            {children}
-        </header>
-    )
+
+async function testFetch(): Promise<ResponseType<QueryDatabaseResponse>> {
+    const response = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/users");
+    return response.json();
+}
+
+export default function Header() {
+    const data = useDataWithLoading<ResponseType<QueryDatabaseResponse>>({
+        key: "profileFetch", 
+        fetcher: testFetch, 
+        dataComponent: (data:ResponseType<QueryDatabaseResponse>) => <Profile data={data} />
+    })
+
+    return (<header css={styles}>{data}</header>);
 }
 
 const styles = css`
