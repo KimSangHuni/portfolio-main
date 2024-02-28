@@ -25,6 +25,7 @@ export default function Header() {
 const styles = css`
     width: 100%;
     padding: 1rem;
+    height: 320px;
     
     ${getMediaQueryStyle("sm", css`
         width: ${BreakPoints.sm}px;
@@ -36,6 +37,5 @@ const styles = css`
     
     ${getMediaQueryStyle("lg", css`
         width: 530px;
-        height: 100vh;
     `)}
 `

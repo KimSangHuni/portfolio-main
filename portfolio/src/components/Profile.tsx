@@ -41,6 +41,7 @@ export default function Profile({ data }: ProfileProps) {
 const styles = css`
     position: relative;
     width: 100%;
+    height: 100%;
     display: flex;
     gap: 12px;
     flex-direction: column;
