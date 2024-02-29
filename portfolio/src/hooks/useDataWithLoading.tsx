@@ -1,3 +1,4 @@
+import BoxLoader from '@/components/loader/BoxLoader';
 import { ReactNode } from 'react';
 import useSWR from 'swr';
 
@@ -23,7 +24,7 @@ export function useDataWithLoading<T,>({
 
   if (!data) {
     // 로딩 중일 때 로딩 컴포넌트 반환
-    return loadingComponent ?? <div>loading...</div>;
+    return loadingComponent ?? <BoxLoader />;
   }
 
   // 데이터가 있을 때 선택한 컴포넌트 반환

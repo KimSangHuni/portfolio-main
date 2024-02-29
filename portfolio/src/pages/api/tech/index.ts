@@ -6,7 +6,7 @@ type Data = {
     response: QueryDatabaseResponse;
 };
 
-const databaseId = 'b36098ac911c423aa7a9bb1f56fc663d';
+const databaseId = '8c7c07e39a294a3390c36f2ad7a6933d';
 
 async function getTechStack() {
     const response = await notion.databases.query({
