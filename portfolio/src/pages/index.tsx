@@ -1,6 +1,7 @@
 import Box from "@/components/Box";
 import FlexBox from "@/components/FlexBox";
 import InnerWrapper from "@/components/InnerWrapper";
+import ProjectList from "@/components/ProjectList";
 import Wrapper from "@/components/Wrapper";
 import BoxLoader from "@/components/loader/BoxLoader";
 import Typography from "@/components/typography/Typography";
@@ -9,30 +10,41 @@ import { PartialDatabaseObjectResponse, PartialPageObjectResponse, QueryDatabase
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 
 interface Props {
-  tech: ResponseType<QueryDatabaseResponse>,
+  techs: ResponseType<QueryDatabaseResponse>,
+  projects: ResponseType<QueryDatabaseResponse>,
 }
 
 export default function Home({ 
-  tech 
+  techs, projects
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const techs = tech.response.results.map((item:PartialDatabaseObjectResponse) => {
-    return <Box key={item.id}><Typography size="sm">{item.properties?.tech?.rich_text[0]?.plain_text}</Typography></Box>;
+  
+  const techList = techs.response.results.map((item:PartialDatabaseObjectResponse) => {
+    return (
+      <Box key={item.id}>
+        <Typography size="sm">{item.properties?.tech?.rich_text[0]?.plain_text}</Typography>
+      </Box>
+    );
   })
+
+  const projectList = projects.response.results.map((item:PartialDatabaseObjectResponse) => {
+
+  })
+
   return (
     <Wrapper>
       <InnerWrapper>
         <Box>
           <Typography size="lg">Tech Stack</Typography>
         </Box>
-        <FlexBox>{techs}</FlexBox>
+        <FlexBox>{techList}</FlexBox>
       </InnerWrapper>
       <InnerWrapper>
         <Box>
           <Typography size="lg">Project</Typography>
         </Box>
-        <Box>
-
-        </Box>
+        <ProjectList />
+        <ProjectList />
+        <ProjectList />
       </InnerWrapper>
       <InnerWrapper>
         <Box>
@@ -48,7 +60,13 @@ export default function Home({
 
 
 export const getStaticProps = (async () => {
-  const res = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/tech");
-  const tech = await res.json();
-  return { props: { tech } }
+  const techResponse = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/techs");
+  const techs = await techResponse.json();
+
+
+  const projectResponse = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + "/projects");
+  const projects = await projectResponse.json();
+
+
+  return { props: { techs, projects } }
 }) satisfies GetStaticProps<Props>;

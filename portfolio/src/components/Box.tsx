@@ -10,9 +10,12 @@ export default function Box({ children, style }: ProfileProps) {
     return (
         <div css={css`
             position: relative;
-            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 22px;
             border-radius: 17px;
             background: white;
+            gap: 8px;
             ${style}
         `}>{children}</div>
     )
