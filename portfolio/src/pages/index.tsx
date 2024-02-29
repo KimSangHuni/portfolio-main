@@ -1,4 +1,5 @@
 import Box from "@/components/Box";
+import FlexBox from "@/components/FlexBox";
 import InnerWrapper from "@/components/InnerWrapper";
 import Wrapper from "@/components/Wrapper";
 import BoxLoader from "@/components/loader/BoxLoader";
@@ -15,7 +16,7 @@ export default function Home({
   tech 
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const techs = tech.response.results.map((item:PartialDatabaseObjectResponse) => {
-    console.log(item.properties.tech.rich_text[0].plain_text);
+    return <Box key={item.id}><Typography size="sm">{item.properties?.tech?.rich_text[0]?.plain_text}</Typography></Box>;
   })
   return (
     <Wrapper>
@@ -23,9 +24,7 @@ export default function Home({
         <Box>
           <Typography size="lg">Tech Stack</Typography>
         </Box>
-        <Box>
-
-        </Box>
+        <FlexBox>{techs}</FlexBox>
       </InnerWrapper>
       <InnerWrapper>
         <Box>

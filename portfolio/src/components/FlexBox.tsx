@@ -6,13 +6,15 @@ interface ProfileProps extends ChildNode {
     style?: SerializedStyles;
 }
 
-export default function Box({ children, style }: ProfileProps) {
+export default function FlexBox({ children, style }: ProfileProps) {
     return (
         <div css={css`
             position: relative;
-            padding: 22px;
-            border-radius: 17px;
-            background: white;
+            width: 100%;
+            display: flex;
+            flex-flow: row wrap;
+            gap: 8px;
+            width: 100%;
             ${style}
         `}>{children}</div>
     )
