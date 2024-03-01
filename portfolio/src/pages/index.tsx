@@ -1,11 +1,12 @@
 import Box from "@/components/Box";
 import FlexBox from "@/components/FlexBox";
 import InnerWrapper from "@/components/InnerWrapper";
-import ProjectList from "@/components/ProjectList";
+import ProjectListRow, { ProjectListRowProps } from "@/components/ProjectListRow";
+import TechListRow from "@/components/TechListRow";
 import Wrapper from "@/components/Wrapper";
 import BoxLoader from "@/components/loader/BoxLoader";
 import Typography from "@/components/typography/Typography";
-import { ResponseType } from "@/types/global";
+import { Level, ResponseType } from "@/types/global";
 import { PartialDatabaseObjectResponse, PartialPageObjectResponse, QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 
@@ -19,15 +20,23 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   
   const techList = techs.response.results.map((item:PartialDatabaseObjectResponse) => {
-    return (
-      <Box key={item.id}>
-        <Typography size="sm">{item.properties?.tech?.rich_text[0]?.plain_text}</Typography>
-      </Box>
-    );
+    
+    const tech = item.properties?.tech?.rich_text[0]?.plain_text;
+    const level = item.properties?.level?.multi_select[0]?.name as Level;
+
+    return (<TechListRow key={item.id} tech={tech} level={level} />);
   })
 
   const projectList = projects.response.results.map((item:PartialDatabaseObjectResponse) => {
+    console.log(item);
 
+    const tech = item.properties?.tech?.rich_text[0]?.plain_text;
+    const title = item.properties?.title?.rich_text[0]?.plain_text;
+    const start = item.properties?.date?.date?.start;
+    const end = item.properties?.date?.date?.end;
+
+    const props:ProjectListRowProps = { tech, title, start, end };
+    return (<ProjectListRow key={item.id} {...props} />)
   })
 
   return (
@@ -42,9 +51,7 @@ export default function Home({
         <Box>
           <Typography size="lg">Project</Typography>
         </Box>
-        <ProjectList />
-        <ProjectList />
-        <ProjectList />
+        {projectList}
       </InnerWrapper>
       <InnerWrapper>
         <Box>

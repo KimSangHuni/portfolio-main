@@ -7,3 +7,5 @@ export type ChildNode = {
 export type ResponseType<T> = {
     response: T
 }
+
+export type Level = "High" | "Middle" | "Low";
