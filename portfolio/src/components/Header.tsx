@@ -5,6 +5,7 @@ import Profile from "./Profile"
 import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
 import { ResponseType } from "@/types/global";
 import { useDataWithLoading } from "@/hooks/useDataWithLoading";
+import Navigation from "./Navigation";
 
 
 async function testFetch(): Promise<ResponseType<QueryDatabaseResponse>> {
@@ -13,19 +14,24 @@ async function testFetch(): Promise<ResponseType<QueryDatabaseResponse>> {
 }
 
 export default function Header() {
-    const data = useDataWithLoading<ResponseType<QueryDatabaseResponse>>({
+    const profile = useDataWithLoading<ResponseType<QueryDatabaseResponse>>({
         key: "profileFetch", 
         fetcher: testFetch, 
         dataComponent: (data:ResponseType<QueryDatabaseResponse>) => <Profile data={data} />
     })
 
-    return (<header css={styles}>{data}</header>);
+    return (
+        <header css={styles}>
+            {profile}
+            <Navigation />
+        </header>
+    );
 }
 
 const styles = css`
     width: 100%;
     padding: 1rem;
-    height: 320px;
+    // height: 320px;
     
     ${getMediaQueryStyle("sm", css`
         width: ${BreakPoints.sm}px;

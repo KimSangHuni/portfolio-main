@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
 import { ResponseType } from "@/types/global";
 import TMP_IMAGE from "@/assets/TMP_IMAGE.png";
+import { getMediaQueryStyle } from "@/styles/media/mediaQuery";
 
 type ProfileProps = {
     data?: ResponseType<QueryDatabaseResponse>
@@ -47,6 +48,10 @@ const styles = css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    ${getMediaQueryStyle("lg", css`
+        height: 320px;
+    `)}
 `
 
 const textStyle = css`
